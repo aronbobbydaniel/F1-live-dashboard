@@ -2120,12 +2120,14 @@ a:visited {
 }
 
 .history-video-bg {
-  opacity: 0.45;
+  /* Reduced to 0.12 and removed mix-blend-mode to cut GPU load significantly */
+  opacity: 0.12;
+  background-color: #050505;
 }
 
 .native-video-element {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   position: absolute;
   top: 0;
@@ -2133,6 +2135,34 @@ a:visited {
   transform: translate3d(0, 0, 0);
   will-change: transform;
   backface-visibility: hidden;
+}
+
+/* ─── Mobile Responsiveness ──────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Kill video backgrounds on phones — too heavy, too laggy */
+  .history-video-bg,
+  .home-video-bg {
+    display: none;
+  }
+
+  /* Prevent horizontal scrollbars on all main containers */
+  body, #root, main {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  /* Stack and pad the main layout containers for phone screens */
+  .navbar-container,
+  .dashboard-grid,
+  .history-container {
+    padding: 0.75rem 1rem !important;
+    flex-direction: column !important;
+  }
+
+  /* Scale down the brand text so it fits the navbar on phones */
+  .brand-text {
+    font-size: 1.5rem !important;
+  }
 }
 
 
