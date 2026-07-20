@@ -2099,7 +2099,19 @@ a:visited {
 }
 
 /* ─── Hardware Accelerated Video Background ──────────────────── */
-.home-video-bg,
+.home-video-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -5;
+  overflow: hidden;
+  pointer-events: none;
+  background-color: #000000;
+  opacity: 0.15; /* Extremely lightweight for the GPU */
+}
+
 .history-video-bg {
   position: fixed;
   top: 0;
@@ -2109,19 +2121,8 @@ a:visited {
   z-index: -5;
   overflow: hidden;
   pointer-events: none;
-  background-color: #050505;
-  /* Removed will-change & backface-visibility — they force compositor
-     layers even on static containers and increase VRAM usage */
-}
-
-.home-video-bg {
-  opacity: 0.85;
-}
-
-.history-video-bg {
-  /* Reduced to 0.12 and removed mix-blend-mode to cut GPU load significantly */
-  opacity: 0.12;
-  background-color: #050505;
+  background-color: #000000;
+  opacity: 0.15; /* Extremely lightweight for the GPU */
 }
 
 .native-video-element {
@@ -2131,35 +2132,30 @@ a:visited {
   position: absolute;
   top: 0;
   left: 0;
-  /* No will-change here — video decoding is already GPU-accelerated */
 }
 
-/* ─── Mobile Responsiveness ──────────────────────────────────── */
+/* ─── Mobile Survival Mode ──────────────────────────────────── */
 @media (max-width: 768px) {
-  /* Kill video backgrounds on phones — too heavy, too laggy */
-  .history-video-bg,
-  .home-video-bg {
-    display: none;
+  /* Kill the video on phones */
+  .history-video-bg {
+    display: none !important;
   }
 
-  /* Prevent horizontal scrollbars on all main containers */
-  body, #root, main {
+  /* Prevent horizontal scroll lockups */
+  html, body, #root, main {
     overflow-x: hidden;
     width: 100%;
+    padding: 0;
+    margin: 0;
   }
 
-  /* Stack and pad the main layout containers for phone screens */
-  .navbar-container,
-  .dashboard-grid,
-  .history-container {
-    padding: 0.75rem 1rem !important;
+  /* Force all major containers to stack */
+  .dashboard-grid, .navbar-container, .history-container {
+    display: flex !important;
     flex-direction: column !important;
-  }
-
-  /* Scale down the brand text so it fits the navbar on phones */
-  .brand-text {
-    font-size: 1.5rem !important;
+    width: 100% !important;
+    padding: 1rem !important;
+    box-sizing: border-box;
   }
 }
-
 
