@@ -2159,3 +2159,25 @@ a:visited {
   }
 }
 
+/* ─── Nuclear Mobile Reset (Kill Horizontal Overflow) ────────── */
+@media (max-width: 768px) {
+  * {
+    box-sizing: border-box !important;
+  }
+
+  html, body, #root, main {
+    overflow-x: hidden !important;
+    width: 100vw !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Allow wide data tables like the Timing Tower to scroll horizontally inside their container, rather than breaking the whole page */
+  .timing-tower, .data-table-container {
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+

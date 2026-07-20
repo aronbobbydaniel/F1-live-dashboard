@@ -184,6 +184,12 @@ export default function LivePage() {
   // Fetch real OpenF1 session telemetry & timing tower data
   const fetchRealOpenF1Data = useCallback(async () => {
     setLoadingRealData(true);
+
+    // Clear stale data immediately so old race info doesn't linger
+    setTimingDrivers([]);
+    setTelemetryPositions([]);
+    setSession(null);
+
     try {
       const BASE = 'https://api.openf1.org/v1';
       const targetSessionKey = SESSION_KEYS_BY_CIRCUIT[selectedCircuitKey] || 9574;
@@ -358,7 +364,7 @@ export default function LivePage() {
     } finally {
       setLoadingRealData(false);
     }
-  }, [initSimulation]);
+  }, [selectedCircuitKey, initSimulation]);
 
   // Initial load and periodic polling for real OpenF1 data
   useEffect(() => {
@@ -603,7 +609,43 @@ export default function LivePage() {
       </div>
 
       {/* 3-Column Grid HUD */}
-      <div className="race-control-grid">
+      <div className="race-control-grid" style={{ position: 'relative' }}>
+        {/* Loading Overlay */}
+        {loadingRealData && timingDrivers.length === 0 && (
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 50,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'rgba(5, 5, 7, 0.85)',
+            backdropFilter: 'blur(8px)',
+            borderRadius: 'var(--radius-lg)',
+            gap: '16px',
+          }}>
+            <div style={{
+              width: '40px',
+              height: '40px',
+              border: '3px solid rgba(225, 6, 0, 0.2)',
+              borderTopColor: 'var(--accent)',
+              borderRadius: '50%',
+              animation: 'spin 0.8s linear infinite',
+            }} />
+            <div style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: '13px',
+              fontWeight: 700,
+              letterSpacing: '2px',
+              color: 'var(--text-secondary)',
+              textTransform: 'uppercase',
+            }}>
+              Loading {CIRCUITS[selectedCircuitKey]?.name ?? 'Circuit'} Data…
+            </div>
+          </div>
+        )}
+
         {/* Column 1: Live Timing Tower */}
         <LiveTimingTower
           drivers={timingDrivers}
@@ -626,6 +668,12 @@ export default function LivePage() {
           tireDegradation={tireDegradation}
         />
       </div>
+
+      <style>{`
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 }
