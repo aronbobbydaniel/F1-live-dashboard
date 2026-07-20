@@ -2098,7 +2098,7 @@ a:visited {
   display: none !important;
 }
 
-/* ─── 60FPS Hardware Accelerated Video Background ────────────── */
+/* ─── Hardware Accelerated Video Background ──────────────────── */
 .home-video-bg,
 .history-video-bg {
   position: fixed;
@@ -2110,9 +2110,8 @@ a:visited {
   overflow: hidden;
   pointer-events: none;
   background-color: #050505;
-  transform: translate3d(0, 0, 0);
-  will-change: transform;
-  backface-visibility: hidden;
+  /* Removed will-change & backface-visibility — they force compositor
+     layers even on static containers and increase VRAM usage */
 }
 
 .home-video-bg {
@@ -2132,9 +2131,7 @@ a:visited {
   position: absolute;
   top: 0;
   left: 0;
-  transform: translate3d(0, 0, 0);
-  will-change: transform;
-  backface-visibility: hidden;
+  /* No will-change here — video decoding is already GPU-accelerated */
 }
 
 /* ─── Mobile Responsiveness ──────────────────────────────────── */

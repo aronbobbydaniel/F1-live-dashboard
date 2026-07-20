@@ -56,7 +56,11 @@ function BarStat({ value, max, color }: { value: number; max: number; color: str
 }
 
 export default function HistoryPage() {
-  const useVideoBg = true; // TOGGLE THIS TO FALSE IF THE VIDEO GETS BLOCKED
+  // Only show video on desktop (>768px) — video on mobile burns battery and causes lag
+  const [useVideoBg, setUseVideoBg] = useState(false);
+  useEffect(() => {
+    setUseVideoBg(window.innerWidth > 768);
+  }, []);
   const [champions, setChampions] = useState<any[]>([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);

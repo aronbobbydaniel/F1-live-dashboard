@@ -6,6 +6,9 @@ export const VideoBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    // Skip canvas animation on mobile to save GPU
+    if (window.innerWidth <= 768) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -23,8 +26,8 @@ export const VideoBackground = () => {
 
     window.addEventListener('resize', handleResize);
 
-    // 60FPS Warp Speed Starfield System
-    const numStars = 350;
+    // Reduced star count from 350 → 150 for lower GPU load
+    const numStars = 150;
     const stars: Array<{ x: number; y: number; z: number; o: number }> = [];
 
     for (let i = 0; i < numStars; i++) {
@@ -36,7 +39,16 @@ export const VideoBackground = () => {
       });
     }
 
-    const render = () => {
+    let lastTime = 0;
+    // Cap at 30fps instead of 60fps — halves GPU work instantly
+    const TARGET_INTERVAL = 1000 / 30;
+
+    const render = (timestamp: number) => {
+      animationFrameId = requestAnimationFrame(render);
+
+      if (timestamp - lastTime < TARGET_INTERVAL) return;
+      lastTime = timestamp;
+
       ctx.fillStyle = 'rgba(5, 5, 7, 0.4)';
       ctx.fillRect(0, 0, width, height);
 
@@ -45,7 +57,7 @@ export const VideoBackground = () => {
 
       for (let i = 0; i < numStars; i++) {
         const star = stars[i];
-        star.z -= 18; // Speed
+        star.z -= 9; // Halved speed to match 30fps feel
 
         if (star.z <= 0) {
           star.x = (Math.random() - 0.5) * width * 2;
@@ -58,7 +70,7 @@ export const VideoBackground = () => {
         const py = star.y * k + cy;
 
         if (px >= 0 && px <= width && py >= 0 && py <= height) {
-          const prevK = 250 / (star.z + 30);
+          const prevK = 250 / (star.z + 15);
           const prevPx = star.x * prevK + cx;
           const prevPy = star.y * prevK + cy;
 
@@ -78,11 +90,9 @@ export const VideoBackground = () => {
           ctx.fill();
         }
       }
-
-      animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    animationFrameId = requestAnimationFrame(render);
 
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -92,7 +102,7 @@ export const VideoBackground = () => {
 
   return (
     <div className="home-video-bg">
-      {/* 60FPS Instant Canvas Starfield Warp Animation */}
+      {/* Optimized Canvas Starfield — 30fps cap, 150 stars, mobile-disabled */}
       <canvas
         ref={canvasRef}
         style={{
@@ -104,7 +114,7 @@ export const VideoBackground = () => {
         }}
       />
 
-      {/* Direct High-Reliability WebM/MP4 Video Loop + YouTube Autoplay Fallback */}
+      {/* MP4 video — only render on desktop */}
       <video
         autoPlay
         loop
@@ -118,12 +128,11 @@ export const VideoBackground = () => {
           height: '100%',
           objectFit: 'cover',
           transform: 'translate(-50%, -50%)',
-          opacity: 0.85,
+          opacity: 0.5,
           pointerEvents: 'none',
         }}
       >
         <source src="/home-bg.mp4" type="video/mp4" />
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-tunnel-of-futuristic-lights-41564-large.mp4" type="video/mp4" />
       </video>
     </div>
   );
