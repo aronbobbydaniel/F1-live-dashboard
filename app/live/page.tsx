@@ -31,30 +31,30 @@ const MOCK_DRIVERS_BASE = [
 ];
 
 const CALENDAR_CIRCUIT_ORDER: string[] = [
-  'bahrain',      // Round 1
-  'jeddah',       // Round 2
-  'albert_park',  // Round 3
-  'suzuka',       // Round 4
-  'shanghai',     // Round 5
-  'miami',        // Round 6
-  'imola',        // Round 7
-  'monaco',       // Round 8
-  'montreal',     // Round 9
-  'barcelona',    // Round 10
-  'spielberg',    // Round 11
-  'silverstone',  // Round 12
-  'hungaroring',  // Round 13
-  'spa',          // Round 14
-  'zandvoort',    // Round 15
-  'monza',        // Round 16
-  'baku',         // Round 17
-  'singapore',    // Round 18
-  'cota',         // Round 19
-  'mexico_city',  // Round 20
-  'interlagos',   // Round 21
-  'las_vegas',    // Round 22
-  'lusail',       // Round 23
-  'yas_marina',   // Round 24
+  'bahrain',        // Round 1
+  'jeddah',         // Round 2
+  'albert_park',    // Round 3
+  'suzuka',         // Round 4
+  'shanghai',       // Round 5
+  'miami',          // Round 6
+  'imola',          // Round 7
+  'monaco',         // Round 8
+  'villeneuve',     // Round 9  — CIRCUITS key for Montreal
+  'catalunya',      // Round 10 — CIRCUITS key for Barcelona
+  'red_bull_ring',  // Round 11 — CIRCUITS key for Spielberg
+  'silverstone',    // Round 12
+  'hungaroring',    // Round 13
+  'spa',            // Round 14
+  'zandvoort',      // Round 15
+  'monza',          // Round 16
+  'baku',           // Round 17
+  'marina_bay',     // Round 18 — CIRCUITS key for Singapore
+  'americas',       // Round 19 — CIRCUITS key for COTA
+  'rodriguez',      // Round 20 — CIRCUITS key for Mexico City
+  'interlagos',     // Round 21
+  'las_vegas',      // Round 22
+  'losail',         // Round 23 — CIRCUITS key for Lusail
+  'yas_marina',     // Round 24
 ];
 
 const CIRCUIT_COUNTRY_CODES: Record<string, string> = {
@@ -66,49 +66,49 @@ const CIRCUIT_COUNTRY_CODES: Record<string, string> = {
   miami: 'us',
   imola: 'it',
   monaco: 'mc',
-  montreal: 'ca',
-  barcelona: 'es',
-  spielberg: 'at',
+  villeneuve: 'ca',
+  catalunya: 'es',
+  red_bull_ring: 'at',
   silverstone: 'gb',
   hungaroring: 'hu',
   spa: 'be',
   zandvoort: 'nl',
   monza: 'it',
   baku: 'az',
-  singapore: 'sg',
-  cota: 'us',
-  mexico_city: 'mx',
+  marina_bay: 'sg',
+  americas: 'us',
+  rodriguez: 'mx',
   interlagos: 'br',
   las_vegas: 'us',
-  lusail: 'qa',
+  losail: 'qa',
   yas_marina: 'ae',
 };
 
 const SESSION_KEYS_BY_CIRCUIT: Record<string, number> = {
-  bahrain: 9472,     // Round 1: Bahrain GP
-  jeddah: 9480,      // Round 2: Saudi Arabia GP
-  albert_park: 9488, // Round 3: Australia GP
-  suzuka: 9496,      // Round 4: Japan GP
-  shanghai: 9673,    // Round 5: China GP
-  miami: 9507,       // Round 6: Miami GP
-  imola: 9515,       // Round 7: Imola GP
-  monaco: 9523,      // Round 8: Monaco GP
-  montreal: 9531,    // Round 9: Canada GP
-  barcelona: 9539,   // Round 10: Spain GP
-  spielberg: 9550,   // Round 11: Austria GP
-  silverstone: 9558, // Round 12: Silverstone GP
-  hungaroring: 9566, // Round 13: Hungary GP
-  spa: 9574,         // Round 14: Belgian GP
-  zandvoort: 9582,   // Round 15: Netherlands GP
-  monza: 9590,       // Round 16: Italian GP
-  baku: 9598,        // Round 17: Azerbaijan GP
-  singapore: 9606,   // Round 18: Singapore GP
-  cota: 9617,        // Round 19: USA Austin GP
-  mexico_city: 9625, // Round 20: Mexico GP
-  interlagos: 9636,  // Round 21: Brazil GP
-  las_vegas: 9644,   // Round 22: Las Vegas GP
-  lusail: 9655,      // Round 23: Qatar GP
-  yas_marina: 9662,  // Round 24: Abu Dhabi GP
+  bahrain: 9472,        // Round 1: Bahrain GP
+  jeddah: 9480,         // Round 2: Saudi Arabia GP
+  albert_park: 9488,    // Round 3: Australia GP
+  suzuka: 9496,         // Round 4: Japan GP
+  shanghai: 9673,       // Round 5: China GP
+  miami: 9507,          // Round 6: Miami GP
+  imola: 9515,          // Round 7: Imola GP
+  monaco: 9523,         // Round 8: Monaco GP
+  villeneuve: 9531,     // Round 9: Canada GP
+  catalunya: 9539,      // Round 10: Spain GP
+  red_bull_ring: 9550,  // Round 11: Austria GP
+  silverstone: 9558,    // Round 12: Silverstone GP
+  hungaroring: 9566,    // Round 13: Hungary GP
+  spa: 9574,            // Round 14: Belgian GP
+  zandvoort: 9582,      // Round 15: Netherlands GP
+  monza: 9590,          // Round 16: Italian GP
+  baku: 9598,           // Round 17: Azerbaijan GP
+  marina_bay: 9606,     // Round 18: Singapore GP
+  americas: 9617,       // Round 19: USA Austin GP
+  rodriguez: 9625,      // Round 20: Mexico GP
+  interlagos: 9636,     // Round 21: Brazil GP
+  las_vegas: 9644,      // Round 22: Las Vegas GP
+  losail: 9655,         // Round 23: Qatar GP
+  yas_marina: 9662,     // Round 24: Abu Dhabi GP
 };
 
 export default function LivePage() {
