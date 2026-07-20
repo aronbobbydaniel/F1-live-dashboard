@@ -1,0 +1,5 @@
+- [x] Create GlobalBackground component (`components/GlobalBackground.tsx`)
+- [x] Inject GlobalBackground into root layout (`app/layout.tsx`)
+- [x] Update global design tokens and card styles in global CSS (`app/globals.css`)
+- [x] Rewrite home page with outlines title, centered countdown, and GSAP page transitions (`app/page.tsx`)
+- [x] Verify build and visual output via browser subagent
